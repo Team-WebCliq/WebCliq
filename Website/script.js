@@ -123,55 +123,55 @@ let currentTemplate = null;
 // Map of template pages to their image paths for accurate previews
 const templatePageImages = {
   1: [
-    "WebCliq Template Pictures/Template 1/1-home.png",
-    "WebCliq Template Pictures/Template 1/1-about.png",
-    "WebCliq Template Pictures/Template 1/1-services.png",
-    "WebCliq Template Pictures/Template 1/1-blog.png",
-    "WebCliq Template Pictures/Template 1/1-contact.png",
+    "WebCliq Template Pictures/Template 01/1-home.png",
+    "WebCliq Template Pictures/Template 01/1-about.png",
+    "WebCliq Template Pictures/Template 01/1-services.png",
+    "WebCliq Template Pictures/Template 01/1-blog.png",
+    "WebCliq Template Pictures/Template 01/1-contact.png",
   ],
-  2: ["WebCliq Template Pictures/Template 2/2-home.png"],
+  2: ["WebCliq Template Pictures/Template 02/2-home.png"],
   3: [
-    "WebCliq Template Pictures/Template 3/3-home.png",
-    "WebCliq Template Pictures/Template 3/3-about.png",
-    "WebCliq Template Pictures/Template 3/3-team.png",
-    "WebCliq Template Pictures/Template 3/3-blog1.png",
-    "WebCliq Template Pictures/Template 3/3-blog2.png",
-    "WebCliq Template Pictures/Template 3/3-blog3.png",
-    "WebCliq Template Pictures/Template 3/3-privacypolicy.png",
+    "WebCliq Template Pictures/Template 03/3-home.png",
+    "WebCliq Template Pictures/Template 03/3-about.png",
+    "WebCliq Template Pictures/Template 03/3-team.png",
+    "WebCliq Template Pictures/Template 03/3-blog1.png",
+    "WebCliq Template Pictures/Template 03/3-blog2.png",
+    "WebCliq Template Pictures/Template 03/3-blog3.png",
+    "WebCliq Template Pictures/Template 03/3-privacypolicy.png",
   ],
-  4: ["WebCliq Template Pictures/Template 4/4-home.png"],
+  4: ["WebCliq Template Pictures/Template 04/4-home.png"],
   5: [
-    "WebCliq Template Pictures/Template 5/5-home.png",
-    "WebCliq Template Pictures/Template 5/5-menu.png",
-    "WebCliq Template Pictures/Template 5/5-gallery.png",
-    "WebCliq Template Pictures/Template 5/5-reservation.png",
-    "WebCliq Template Pictures/Template 5/5-about.png",
-    "WebCliq Template Pictures/Template 5/5-contact.png",
+    "WebCliq Template Pictures/Template 05/5-home.png",
+    "WebCliq Template Pictures/Template 05/5-menu.png",
+    "WebCliq Template Pictures/Template 05/5-gallery.png",
+    "WebCliq Template Pictures/Template 05/5-reservation.png",
+    "WebCliq Template Pictures/Template 05/5-about.png",
+    "WebCliq Template Pictures/Template 05/5-contact.png",
   ],
   6: [
-    "WebCliq Template Pictures/Template 6/6-home.png",
-    "WebCliq Template Pictures/Template 6/6-destination.png",
-    "WebCliq Template Pictures/Template 6/6-packages.png",
-    "WebCliq Template Pictures/Template 6/6-gallery.png",
-    "WebCliq Template Pictures/Template 6/6-reviews.png",
-    "WebCliq Template Pictures/Template 6/6-contact.png",
+    "WebCliq Template Pictures/Template 06/6-home.png",
+    "WebCliq Template Pictures/Template 06/6-destination.png",
+    "WebCliq Template Pictures/Template 06/6-packages.png",
+    "WebCliq Template Pictures/Template 06/6-gallery.png",
+    "WebCliq Template Pictures/Template 06/6-reviews.png",
+    "WebCliq Template Pictures/Template 06/6-contact.png",
   ],
-  7: ["WebCliq Template Pictures/Template 7/7-HOME.png"],
+  7: ["WebCliq Template Pictures/Template 07/7-HOME.png"],
   8: [
-    "WebCliq Template Pictures/Template 8/8 -Home.png",
-    "WebCliq Template Pictures/Template 8/8-Menu.png",
-    "WebCliq Template Pictures/Template 8/8-gallery.png",
-    "WebCliq Template Pictures/Template 8/8-about.png",
-    "WebCliq Template Pictures/Template 8/8-order.png",
+    "WebCliq Template Pictures/Template 08/8 -Home.png",
+    "WebCliq Template Pictures/Template 08/8-Menu.png",
+    "WebCliq Template Pictures/Template 08/8-gallery.png",
+    "WebCliq Template Pictures/Template 08/8-about.png",
+    "WebCliq Template Pictures/Template 08/8-order.png",
   ],
   9: [
-    "WebCliq Template Pictures/Template 9/9-home.png",
-    "WebCliq Template Pictures/Template 9/9-trending.png",
-    "WebCliq Template Pictures/Template 9/9-playlist.png",
-    "WebCliq Template Pictures/Template 9/9-artist.png",
-    "WebCliq Template Pictures/Template 9/9-subscription.png",
-    "WebCliq Template Pictures/Template 9/9_genre.png",
-    "WebCliq Template Pictures/Template 9/9-contact.png",
+    "WebCliq Template Pictures/Template 09/9-home.png",
+    "WebCliq Template Pictures/Template 09/9-trending.png",
+    "WebCliq Template Pictures/Template 09/9-playlist.png",
+    "WebCliq Template Pictures/Template 09/9-artist.png",
+    "WebCliq Template Pictures/Template 09/9-subscription.png",
+    "WebCliq Template Pictures/Template 09/9_genre.png",
+    "WebCliq Template Pictures/Template 09/9-contact.png",
   ],
   10: [
     "WebCliq Template Pictures/Template 10/10-HOME.png",
@@ -427,6 +427,7 @@ function init() {
   createParticles();
   populateTemplateSelect();
   setupContactForm();
+  setupHeaderToggle();
   setTimeout(setupScrollAnimations, 100);
 }
 
@@ -445,3 +446,24 @@ if (window.elementSdk) {
 }
 
 document.addEventListener('DOMContentLoaded', init);
+
+// Mobile header toggle
+function setupHeaderToggle() {
+  const header = document.querySelector('.header');
+  const toggle = document.querySelector('.header-toggle');
+  const nav = document.getElementById('site-nav') || document.querySelector('.header-nav');
+
+  if (!header || !toggle || !nav) return;
+
+  toggle.addEventListener('click', () => {
+    const open = header.classList.toggle('nav-open');
+    toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+  });
+
+  nav.querySelectorAll('a').forEach(link => {
+    link.addEventListener('click', () => {
+      header.classList.remove('nav-open');
+      toggle.setAttribute('aria-expanded', 'false');
+    });
+  });
+}
