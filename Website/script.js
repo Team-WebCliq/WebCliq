@@ -119,6 +119,7 @@ function setupFilters() {
 // Modal and slider functionality
 let currentSlide = 0;
 let currentTemplate = null;
+let modalHistoryActive = false;
 
 // Map of template pages to their image paths for accurate previews
 const templatePageImages = {
@@ -297,12 +298,28 @@ function openModal() {
 
   modal.classList.add('active');
   document.body.style.overflow = 'hidden';
+
+  // Push history state to allow phone back button to close the preview
+  try {
+    if (!modalHistoryActive) {
+      history.pushState({ modal: true }, '', '#preview');
+      modalHistoryActive = true;
+    }
+  } catch (e) { /* ignore */ }
 }
 
 function closeModal() {
   const modal = document.getElementById('previewModal');
   modal.classList.remove('active');
   document.body.style.overflow = 'auto';
+
+  // If we added a history entry, go back to remove the hash
+  if (modalHistoryActive && location.hash === '#preview') {
+    modalHistoryActive = false;
+    try { history.back(); } catch (e) { /* ignore */ }
+  } else {
+    modalHistoryActive = false;
+  }
 }
 
 function generateSlides() {
@@ -429,6 +446,15 @@ function init() {
   setupContactForm();
   setupHeaderToggle();
   setTimeout(setupScrollAnimations, 100);
+  // Close modal when navigating back
+  window.addEventListener('popstate', () => {
+    const modal = document.getElementById('previewModal');
+    if (modal && modal.classList.contains('active') && location.hash !== '#preview') {
+      modal.classList.remove('active');
+      document.body.style.overflow = 'auto';
+      modalHistoryActive = false;
+    }
+  });
 }
 
 // Initialize Element SDK
@@ -452,6 +478,7 @@ function setupHeaderToggle() {
   const header = document.querySelector('.header');
   const toggle = document.querySelector('.header-toggle');
   const nav = document.getElementById('site-nav') || document.querySelector('.header-nav');
+  const overlay = document.querySelector('.nav-overlay');
 
   if (!header || !toggle || !nav) return;
 
@@ -466,4 +493,11 @@ function setupHeaderToggle() {
       toggle.setAttribute('aria-expanded', 'false');
     });
   });
+
+  if (overlay) {
+    overlay.addEventListener('click', () => {
+      header.classList.remove('nav-open');
+      toggle.setAttribute('aria-expanded', 'false');
+    });
+  }
 }
