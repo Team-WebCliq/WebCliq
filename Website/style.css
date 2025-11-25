@@ -114,7 +114,7 @@ main { padding-top: 120px; }
 }
 
 /* Modal */
-.modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,.75); backdrop-filter: blur(8px); display: none; align-items: center; justify-content: center; z-index: 200; }
+.modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,.75); backdrop-filter: blur(8px); display: none; align-items: center; justify-content: center; z-index: 9999; }
 .modal-overlay.active { display: flex; }
 .modal-content { width: 92%; max-width: 980px; max-height: 90vh; background: rgba(17,24,39,.9); border: 1px solid rgba(59,130,246,.35); border-radius: 16px; overflow: hidden; }
 .modal-body { display: flex; gap: 1rem; padding: 1rem 1.25rem; max-height: calc(90vh - 60px); overflow: hidden; }
@@ -127,6 +127,11 @@ main { padding-top: 120px; }
 #zoomRange {}
 #zoomValue { display: inline-block; min-width: 3ch; text-align: center; }
 .modal-header { display: flex; align-items: center; justify-content: space-between; padding: 1rem 1.25rem; border-bottom: 1px solid rgba(59,130,246,.25); position: sticky; top: env(safe-area-inset-top, 0); z-index: 5; background: rgba(17,24,39,.95); }
+/* Ensure modal header and close icon are always visible on phones */
+@media (max-width: 800px) {
+  .modal-header { position: fixed !important; top: env(safe-area-inset-top, 0); left: 0; right: 0; z-index: 10000; padding: .85rem 1rem; }
+  .modal-body { padding-top: 72px !important; }
+}
 .modal-title { font-weight: 800; }
 .modal-close { cursor: pointer; font-size: 1.25rem; }
 /* Improve visibility of close button across devices */
