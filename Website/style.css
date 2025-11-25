@@ -282,3 +282,8 @@ footer { margin-top: 2rem; padding: 2rem 0; border-top: 1px solid rgba(59,130,24
   .modal-header { height: 68px; }
   .modal-body { height: calc(100vh - 68px) !important; overflow-y: auto !important; padding-top: 0 !important; }
 }
+
+/* Phone spacing for preview heading */
+@media (max-width: 800px) {
+  .modal-title { padding-left: 1rem !important; }
+}
