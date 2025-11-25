@@ -129,8 +129,8 @@ main { padding-top: 120px; }
 .modal-header { display: flex; align-items: center; justify-content: space-between; padding: 1rem 1.25rem; border-bottom: 1px solid rgba(59,130,246,.25); position: sticky; top: env(safe-area-inset-top, 0); z-index: 5; background: rgba(17,24,39,.95); }
 /* Ensure modal header and close icon are always visible on phones */
 @media (max-width: 800px) {
-  .modal-header { position: fixed !important; top: env(safe-area-inset-top, 0); left: 0; right: 0; z-index: 10000; padding: .85rem 1rem; }
-  .modal-body { padding-top: 72px !important; }
+  .modal-header { position: fixed !important; top: env(safe-area-inset-top, 0); left: 0; right: 0; z-index: 10000; padding: .85rem 1rem; height: 68px; }
+  .modal-body { padding-top: 0 !important; height: calc(100vh - 68px) !important; overflow-y: auto !important; }
 }
 .modal-title { font-weight: 800; }
 .modal-close { cursor: pointer; font-size: 1.25rem; }
@@ -276,3 +276,9 @@ footer { margin-top: 2rem; padding: 2rem 0; border-top: 1px solid rgba(59,130,24
 @media (max-width: 600px) { .template-description-modal { padding-left: 1rem; } }
 /* Stronger padding for preview description on phones */
 @media (max-width: 800px) { .template-description-modal { padding-left: 1rem !important; } }
+
+/* Phone fix: ensure modal body accounts for fixed header height */
+@media (max-width: 800px) {
+  .modal-header { height: 68px; }
+  .modal-body { height: calc(100vh - 68px) !important; overflow-y: auto !important; padding-top: 0 !important; }
+}
