@@ -209,6 +209,17 @@ const templateHomeImage = {
   22: 'WebCliq Template Pictures/Template 22/22-Home.png'
 };
 
+function toWebpPath(p) {
+  if (!p) return p;
+  return p.replace(/\.(png|jpg|jpeg)$/i, '.webp');
+}
+
+function imgWithFallback(pngPath, alt) {
+  const webp = toWebpPath(pngPath);
+  const safeAlt = alt || '';
+  return `<img src="${webp}" alt="${safeAlt}" onerror="this.onerror=null; this.src='${pngPath}'" />`;
+}
+
 function openPreview(id) {
   try {
     sessionStorage.setItem('indexScroll', String(window.scrollY || 0));
@@ -223,7 +234,7 @@ function renderTemplates(filter = 'all') {
   container.innerHTML = filtered.map(template => (
     `<div class="template-card" data-category="${template.category}" onclick="openPreview(${template.id})">
       <div class="template-preview">
-        <img src="${templateHomeImage[template.id]}" alt="${template.name}" />
+        ${imgWithFallback(templateHomeImage[template.id], template.name)}
       </div>
       <div class="template-info">
         <h3>${template.name}</h3>
@@ -312,7 +323,7 @@ function renderPreviewPage() {
   const descEl = document.getElementById('preview-description');
   if (titleEl && template) titleEl.textContent = template.name;
   if (descEl && template) descEl.textContent = template.description;
-  container.innerHTML = images.map(src => `<img src="${src}" alt="${template ? template.name : 'Template'}" />`).join('');
+  container.innerHTML = images.map(src => imgWithFallback(src, template ? template.name : 'Template')).join('');
 }
 
 function init() {
