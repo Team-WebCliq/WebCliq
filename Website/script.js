@@ -262,17 +262,7 @@ function initFilters() {
 function initContactForm() {
   const form = document.getElementById('contact-form');
   if (!form) return;
-  if (!form.hasAttribute('action')) {
-    form.addEventListener('submit', e => {
-      e.preventDefault();
-      const msg = document.getElementById('success-message');
-      if (msg) {
-        msg.style.display = 'block';
-        setTimeout(() => { msg.style.display = 'none'; }, 5000);
-      }
-      form.reset();
-    });
-  }
+  // Do not intercept; let browser submit natively to Web3Forms
 }
 
 function onConfigChange(config) {
